@@ -188,7 +188,7 @@ class StmtListNode extends ASTnode {
 
     public void unparse(PrintWriter p, int indent) {
         for(StmtNode node : myStmts) {
-            doIndent(indent);
+            doIndent(p, indent);
             node.unparse(p, indent);
             p.println();
         }
