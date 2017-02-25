@@ -78,6 +78,10 @@ non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
 non terminal TypeNode         type;
 non terminal IdNode           id;
+non terminal ExpNode          loc;
+non terminal FormalsListNode  formals;
+non terminal LinkedList<FormalDeclNode>  formalsList;
+non terminal FormalDeclNode   formalDecl;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -113,6 +117,30 @@ varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
                 :}
                 ;
+                
+formals         ::= LPAREN RPAREN
+                {: RESULT = new FormalsListNode(new LinkedList<>());
+                :}
+                | LPAREN formalsList:list RPAREN
+                {: RESULT = new FormalsListNode(list);
+                :}
+                ;
+
+formalsList     ::= formalDecl:fd
+                {: LinkedList<FormalDeclNode> decls = new LinkedList<>();
+                   decls.addFirst(fd);
+                   RESULT = decls;
+                :}
+                | formalDecl:fd COMMA formalsList:fl
+                {: fl.addFirst(fd);
+                   RESULT = fl;
+                :}
+                ;
+
+formalDecl      ::= type:t id:i        // note: no struct parameters
+                {: RESULT = new FormalDeclNode(t,i);
+                :}
+                ;
 
 type            ::= INT
                 {: RESULT = new IntNode();
@@ -122,6 +150,14 @@ type            ::= INT
                 :}
                 | VOID
                 {: RESULT = new VoidNode();
+                :}
+                ;
+                
+loc             ::= id:i
+                {: RESULT = i;
+                :}
+                | loc:l DOT id:i
+                {: RESULT = new DotAccessExpNode(l, i);
                 :}
                 ;
 

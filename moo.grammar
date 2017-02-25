@@ -30,15 +30,15 @@ structDecl      ::= STRUCT id LCURLY structBody RCURLY SEMICOLON
 structBody      ::= structBody varDecl
                 | varDecl
                 ;
-                
+//             
 formals         ::= LPAREN RPAREN
                 | LPAREN formalsList RPAREN
                 ;
-
+//
 formalsList     ::= formalDecl
                 | formalDecl COMMA formalsList
                 ;
-
+//
 formalDecl      ::= type id        // note: no struct parameters
                 ;
 
@@ -99,15 +99,16 @@ fncall          ::=  id LPAREN RPAREN   // fn call with no args
 actualList      ::= exp
                 | actualList COMMA exp
                 ;
-
+//
 type            ::= INT
                 | BOOL
                 | VOID
                 ;
 
+//
 loc             ::= id
                 | loc DOT id
-
+//
 id              ::= ID
                 ;
 
