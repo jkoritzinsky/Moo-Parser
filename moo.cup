@@ -65,6 +65,7 @@ terminal                GREATER;
 terminal                LESSEQ;
 terminal                GREATEREQ;
 terminal                ASSIGN;
+terminal                UMINUS;
 
 
 /* Nonterminals
@@ -86,9 +87,17 @@ non terminal FormalsListNode  formals;
 non terminal LinkedList<FormalDeclNode>  formalsList;
 non terminal FormalDeclNode   formalDecl;
 non terminal LinkedList<DeclNode> structBody;
+non terminal StmtNode         stmt;
  
  
 /* NOTE: Add precedence and associativity declarations here */
+precedence right ASSIGN;
+precedence nonassoc OR;
+precedence nonassoc AND;
+precedence nonassoc LESS, GREATER, LESSEQ, GREATEREQ, EQUALS, NOTEQUALS;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+precedence nonassoc UMINUS, NOT;
 
 
 start with program;
@@ -174,6 +183,41 @@ formalsList     ::= formalDecl:fd
 
 formalDecl      ::= type:t id:i        // note: no struct parameters
                 {: RESULT = new FormalDeclNode(t,i);
+                :}
+                ;
+
+stmt            ::= assignExp:a SEMICOLON
+                {: RESULT = new AssignStmtNode(a);
+                :}
+                | loc:l PLUSPLUS SEMICOLON
+                {: RESULT = new PostIncStmtNode(l);
+                :}
+                | loc:l MINUSMINUS SEMICOLON
+                {: RESULT = new PostDecStmtNode(l);
+                :}
+                | CIN READ loc:l SEMICOLON
+                {: RESULT = new ReadStmtNode(l);
+                :}
+                | COUT WRITE exp:e SEMICOLON
+                {: RESULT = new WriteStmtNode(e);
+                :}
+                | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
+                {: RESULT = new IfStmtNode(e, vdl, sl);
+                :}
+                | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdl1 stmtList:sl1 RCURLY ELSE LCURLY varDeclList:vdl2 stmtList:sl2 RCURLY
+                {: RESULT = new IfElseStmtNode(e, vdl1, sl1, vdl2, sl2);
+                :}
+                | WHILE LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
+                {: RESULT = new WhileStmtNode(e, vdl, sl);
+                :}
+                | RETURN exp:e SEMICOLON
+                {: RESULT = new ReturnStmtNode(e);
+                :}
+                | RETURN SEMICOLON
+                {: RESULT = new ReturnStmtNode(NULL);
+                :}
+                | fncall:f SEMICOLON
+                {: RESULT = new CallStmtNode(f);
                 :}
                 ;
 
