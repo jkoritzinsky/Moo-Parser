@@ -78,6 +78,9 @@ non terminal DeclNode         decl;
 non terminal VarDeclNode      varDecl;
 non terminal TypeNode         type;
 non terminal IdNode           id;
+non terminal FnDeclNode       fnDecl;
+non terminal StructDeclNode   structDecl;
+non terminal LinkedList       varDeclList;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -109,8 +112,20 @@ decl            ::= varDecl:v
                 :}
                 ;
 
+varDeclList	::= varDeclList:vdl varDecl:vd
+                {: vdl.addLast(vd);
+                   RESULT = vdl;
+		:}
+                | /* epsilon */
+                {: RESULT = new LinkedList<VarDeclNode>();
+                :}
+		;
+
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
+                :}
+                | STRUCT id:t id:i SEMICOLON
+                {: RESULT = new VarDeclNode(new StructNode(t), i, 0);
                 :}
                 ;
 

@@ -1,22 +1,23 @@
 /**********************************************************************
  Grammar for moo programs
  **********************************************************************/
+//
 program         ::= declList
                 ;
-
+//
 declList        ::= declList decl
                 | /* epsilon */
                 ;
-
+//
 decl            ::= varDecl
                 | fnDecl
                 | structDecl     // struct definitions only at top level
                 ;
-
+//
 varDeclList     ::= varDeclList varDecl
                 | /* epsilon */
                 ;
-
+//
 varDecl         ::= type id SEMICOLON
                 | STRUCT id id SEMICOLON
                 ;
