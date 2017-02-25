@@ -117,6 +117,12 @@ varDecl         ::= type:t id:i SEMICOLON
 type            ::= INT
                 {: RESULT = new IntNode();
                 :}
+                | BOOL
+                {: RESULT = new BoolNode();
+                :}
+                | VOID
+                {: RESULT = new VoidNode();
+                :}
                 ;
 
 id              ::= ID:i
