@@ -81,6 +81,11 @@ non terminal IdNode           id;
 non terminal FnDeclNode       fnDecl;
 non terminal StructDeclNode   structDecl;
 non terminal LinkedList       varDeclList;
+non terminal ExpNode          loc;
+non terminal FormalsListNode  formals;
+non terminal LinkedList<FormalDeclNode>  formalsList;
+non terminal FormalDeclNode   formalDecl;
+non terminal LinkedList<DeclNode> structBody;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -110,6 +115,9 @@ declList        ::= declList:dl decl:d
 decl            ::= varDecl:v
                 {: RESULT = v;
                 :}
+                | structDecl:s
+                {: RESULT = s;
+                :}
                 ;
 
 varDeclList	::= varDeclList:vdl varDecl:vd
@@ -128,6 +136,46 @@ varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(new StructNode(t), i, 0);
                 :}
                 ;
+                
+                                
+structDecl      ::= STRUCT id:i LCURLY structBody:decls RCURLY SEMICOLON
+                {: RESULT = new StructDeclNode(i, new DeclListNode(decls));
+                :}
+                ;
+                
+structBody      ::= structBody:body varDecl:decl
+                {: body.addLast(decl);
+                :}
+                | varDecl:decl
+                {: LinkedList<DeclNode> nodes = new LinkedList<DeclNode>();
+                   nodes.addFirst(decl);
+                   RESULT = nodes;
+                :}
+                ;
+                
+formals         ::= LPAREN RPAREN
+                {: RESULT = new FormalsListNode(new LinkedList<>());
+                :}
+                | LPAREN formalsList:list RPAREN
+                {: RESULT = new FormalsListNode(list);
+                :}
+                ;
+
+formalsList     ::= formalDecl:fd
+                {: LinkedList<FormalDeclNode> decls = new LinkedList<>();
+                   decls.addFirst(fd);
+                   RESULT = decls;
+                :}
+                | formalDecl:fd COMMA formalsList:fl
+                {: fl.addFirst(fd);
+                   RESULT = fl;
+                :}
+                ;
+
+formalDecl      ::= type:t id:i        // note: no struct parameters
+                {: RESULT = new FormalDeclNode(t,i);
+                :}
+                ;
 
 type            ::= INT
                 {: RESULT = new IntNode();
@@ -137,6 +185,14 @@ type            ::= INT
                 :}
                 | VOID
                 {: RESULT = new VoidNode();
+                :}
+                ;
+                
+loc             ::= id:i
+                {: RESULT = i;
+                :}
+                | loc:l DOT id:i
+                {: RESULT = new DotAccessExpNode(l, i);
                 :}
                 ;
 

@@ -7,3 +7,5 @@ void c;
 
 struct node myNode;
 node myNode;
+struct a { int b; };
+
