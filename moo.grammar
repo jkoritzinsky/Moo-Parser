@@ -23,10 +23,10 @@ varDecl         ::= type id SEMICOLON
 
 fnDecl          ::= type id formals fnBody
                 ;
-                
+//                
 structDecl      ::= STRUCT id LCURLY structBody RCURLY SEMICOLON
                 ;
-                
+//                
 structBody      ::= structBody varDecl
                 | varDecl
                 ;
