@@ -23,4 +23,6 @@ hs_err_pid*
 
 *~
 *.jlex.java
+parser.java
+sym.java
 
