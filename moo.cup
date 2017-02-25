@@ -233,6 +233,7 @@ stmt            ::= assignExp:a SEMICOLON
                 :}
                 | fncall:f SEMICOLON
                 {: RESULT = new CallStmtNode(f);
+                :}
                 ;
 
 assignExp       ::= loc:l ASSIGN exp:r
