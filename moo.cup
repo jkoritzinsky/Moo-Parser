@@ -99,8 +99,8 @@ non terminal LinkedList<StmtNode> stmtList;
  
 /* NOTE: Add precedence and associativity declarations here */
 precedence right ASSIGN;
-precedence nonassoc OR;
-precedence nonassoc AND;
+precedence left OR;
+precedence left AND;
 precedence nonassoc LESS, GREATER, LESSEQ, GREATEREQ, EQUALS, NOTEQUALS;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIVIDE;
@@ -300,6 +300,7 @@ exp             ::= assignExp:e
                 | MINUS term:t
                 {: RESULT = new UnaryMinusNode(t);
                 :}
+                %prec UMINUS
                 | term:t
                 {: RESULT = t;
                 :}
