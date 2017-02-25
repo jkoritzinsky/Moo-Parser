@@ -82,6 +82,8 @@ non terminal ExpNode          loc;
 non terminal FormalsListNode  formals;
 non terminal LinkedList<FormalDeclNode>  formalsList;
 non terminal FormalDeclNode   formalDecl;
+non terminal StructDeclNode   structDecl;
+non terminal LinkedList<DeclNode> structBody;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -111,10 +113,29 @@ declList        ::= declList:dl decl:d
 decl            ::= varDecl:v
                 {: RESULT = v;
                 :}
+                | structDecl:s
+                {: RESULT = s;
+                :}
                 ;
 
 varDecl         ::= type:t id:i SEMICOLON
                 {: RESULT = new VarDeclNode(t, i, VarDeclNode.NOT_STRUCT);
+                :}
+                ;
+                
+                                
+structDecl      ::= STRUCT id:i LCURLY structBody:decls RCURLY SEMICOLON
+                {: RESULT = new StructDeclNode(i, new DeclListNode(decls));
+                :}
+                ;
+                
+structBody      ::= structBody:body varDecl:decl
+                {: body.addLast(decl);
+                :}
+                | varDecl:decl
+                {: LinkedList<DeclNode> nodes = new LinkedList<DeclNode>();
+                   nodes.addFirst(decl);
+                   RESULT = nodes;
                 :}
                 ;
                 

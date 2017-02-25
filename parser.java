@@ -28,12 +28,13 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\021\000\002\002\004\000\002\002\003\000\002\003" +
-    "\004\000\002\003\002\000\002\004\003\000\002\005\005" +
-    "\000\002\011\004\000\002\011\005\000\002\012\003\000" +
-    "\002\012\005\000\002\013\004\000\002\006\003\000\002" +
-    "\006\003\000\002\006\003\000\002\010\003\000\002\010" +
-    "\005\000\002\007\003" });
+    "\000\025\000\002\002\004\000\002\002\003\000\002\003" +
+    "\004\000\002\003\002\000\002\004\003\000\002\004\003" +
+    "\000\002\005\005\000\002\014\010\000\002\015\004\000" +
+    "\002\015\003\000\002\011\004\000\002\011\005\000\002" +
+    "\012\003\000\002\012\005\000\002\013\004\000\002\006" +
+    "\003\000\002\006\003\000\002\006\003\000\002\010\003" +
+    "\000\002\010\005\000\002\007\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -41,15 +42,23 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\015\000\012\002\ufffe\004\ufffe\005\ufffe\006\ufffe\001" +
-    "\002\000\012\002\000\004\014\005\011\006\013\001\002" +
-    "\000\004\002\006\001\002\000\004\002\001\001\002\000" +
-    "\012\002\uffff\004\uffff\005\uffff\006\uffff\001\002\000\004" +
-    "\020\015\001\002\000\004\020\ufff5\001\002\000\012\002" +
-    "\ufffd\004\ufffd\005\ufffd\006\ufffd\001\002\000\004\020\ufff4" +
-    "\001\002\000\004\020\ufff6\001\002\000\004\027\ufff1\001" +
-    "\002\000\004\027\017\001\002\000\012\002\ufffc\004\ufffc" +
-    "\005\ufffc\006\ufffc\001\002" });
+    "\000\026\000\014\002\ufffe\004\ufffe\005\ufffe\006\ufffe\011" +
+    "\ufffe\001\002\000\014\002\000\004\016\005\012\006\015" +
+    "\011\011\001\002\000\004\002\006\001\002\000\004\002" +
+    "\001\001\002\000\014\002\uffff\004\uffff\005\uffff\006\uffff" +
+    "\011\uffff\001\002\000\004\020\017\001\002\000\004\020" +
+    "\017\001\002\000\004\020\ufff1\001\002\000\014\002\ufffd" +
+    "\004\ufffd\005\ufffd\006\ufffd\011\ufffd\001\002\000\014\002" +
+    "\ufffc\004\ufffc\005\ufffc\006\ufffc\011\ufffc\001\002\000\004" +
+    "\020\ufff0\001\002\000\004\020\ufff2\001\002\000\006\023" +
+    "\uffed\027\uffed\001\002\000\004\023\021\001\002\000\010" +
+    "\004\016\005\012\006\015\001\002\000\012\004\ufff8\005" +
+    "\ufff8\006\ufff8\024\ufff8\001\002\000\012\004\016\005\012" +
+    "\006\015\024\025\001\002\000\012\004\ufff9\005\ufff9\006" +
+    "\ufff9\024\ufff9\001\002\000\004\027\026\001\002\000\014" +
+    "\002\ufffa\004\ufffa\005\ufffa\006\ufffa\011\ufffa\001\002\000" +
+    "\004\027\030\001\002\000\016\002\ufffb\004\ufffb\005\ufffb" +
+    "\006\ufffb\011\ufffb\024\ufffb\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -57,12 +66,15 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\015\000\006\002\004\003\003\001\001\000\010\004" +
-    "\006\005\011\006\007\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\004\007\015\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\000\026\000\006\002\004\003\003\001\001\000\012\004" +
+    "\006\005\012\006\007\014\013\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\007\026\001" +
+    "\001\000\004\007\017\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001" });
+    "\001\000\002\001\001\000\002\001\001\000\010\005\021" +
+    "\006\007\015\022\001\001\000\002\001\001\000\006\005" +
+    "\023\006\007\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -207,7 +219,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // varDecl ::= type id SEMICOLON 
+          case 5: // decl ::= structDecl 
+            {
+              DeclNode RESULT =null;
+		int sleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int sright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		StructDeclNode s = (StructDeclNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 RESULT = s;
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("decl",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // varDecl ::= type id SEMICOLON 
             {
               VarDeclNode RESULT =null;
 		int tleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
@@ -223,7 +248,54 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // formals ::= LPAREN RPAREN 
+          case 7: // structDecl ::= STRUCT id LCURLY structBody RCURLY SEMICOLON 
+            {
+              StructDeclNode RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		IdNode i = (IdNode)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int declsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int declsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		LinkedList<DeclNode> decls = (LinkedList<DeclNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		 RESULT = new StructDeclNode(i, new DeclListNode(decls));
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("structDecl",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // structBody ::= structBody varDecl 
+            {
+              LinkedList<DeclNode> RESULT =null;
+		int bodyleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int bodyright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		LinkedList<DeclNode> body = (LinkedList<DeclNode>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int declleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int declright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		VarDeclNode decl = (VarDeclNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 body.addLast(decl);
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("structBody",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // structBody ::= varDecl 
+            {
+              LinkedList<DeclNode> RESULT =null;
+		int declleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int declright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		VarDeclNode decl = (VarDeclNode)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 LinkedList<DeclNode> nodes = new LinkedList<DeclNode>();
+                   nodes.addFirst(decl);
+                   RESULT = nodes;
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("structBody",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // formals ::= LPAREN RPAREN 
             {
               FormalsListNode RESULT =null;
 		 RESULT = new FormalsListNode(new LinkedList<>());
@@ -233,7 +305,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // formals ::= LPAREN formalsList RPAREN 
+          case 11: // formals ::= LPAREN formalsList RPAREN 
             {
               FormalsListNode RESULT =null;
 		int listleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
@@ -246,7 +318,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // formalsList ::= formalDecl 
+          case 12: // formalsList ::= formalDecl 
             {
               LinkedList<FormalDeclNode> RESULT =null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
@@ -261,7 +333,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // formalsList ::= formalDecl COMMA formalsList 
+          case 13: // formalsList ::= formalDecl COMMA formalsList 
             {
               LinkedList<FormalDeclNode> RESULT =null;
 		int fdleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
@@ -278,7 +350,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // formalDecl ::= type id 
+          case 14: // formalDecl ::= type id 
             {
               FormalDeclNode RESULT =null;
 		int tleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
@@ -294,7 +366,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // type ::= INT 
+          case 15: // type ::= INT 
             {
               TypeNode RESULT =null;
 		 RESULT = new IntNode();
@@ -304,7 +376,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // type ::= BOOL 
+          case 16: // type ::= BOOL 
             {
               TypeNode RESULT =null;
 		 RESULT = new BoolNode();
@@ -314,7 +386,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // type ::= VOID 
+          case 17: // type ::= VOID 
             {
               TypeNode RESULT =null;
 		 RESULT = new VoidNode();
@@ -324,7 +396,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // loc ::= id 
+          case 18: // loc ::= id 
             {
               ExpNode RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
@@ -337,7 +409,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // loc ::= loc DOT id 
+          case 19: // loc ::= loc DOT id 
             {
               ExpNode RESULT =null;
 		int lleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
@@ -353,7 +425,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // id ::= ID 
+          case 20: // id ::= ID 
             {
               IdNode RESULT =null;
 		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
