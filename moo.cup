@@ -93,8 +93,8 @@ non terminal AssignNode assignExp;
 non terminal ExpNode term;
 non terminal CallExpNode fncall;
 non terminal LinkedList<ExpNode> actualList;
-non terminal FnDeclNode fnDecl;
 non terminal FnBodyNode fnBody;
+non terminal LinkedList<StmtNode> stmtList;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -173,7 +173,7 @@ structBody      ::= structBody:body varDecl:decl
                 ;
                 
 fnDecl          ::= type:t id:i formals:f fnBody:b
-                {: RESULT = new FnDecl(t, i, f, b);
+                {: RESULT = new FnDeclNode(t, i, f, b);
                 :}
                 ;
                 
@@ -202,7 +202,16 @@ formalDecl      ::= type:t id:i        // note: no struct parameters
                 ;
                 
 fnBody          ::= LCURLY varDeclList:v stmtList:s RCURLY
-                {: RESULT = new FnBodyNode(v, s);
+                {: RESULT = new FnBodyNode(new DeclListNode(v), new StmtListNode(s));
+                :}
+                ;
+
+stmtList        ::= stmtList:sl stmt:s
+                {: sl.addLast(s);
+                   RESULT = sl;
+                :}
+                | /* epsilon */
+                {: RESULT = new LinkedList<StmtNode>();
                 :}
                 ;
 
@@ -222,22 +231,24 @@ stmt            ::= assignExp:a SEMICOLON
                 {: RESULT = new WriteStmtNode(e);
                 :}
                 | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
-                {: RESULT = new IfStmtNode(e, vdl, sl);
+                {: RESULT = new IfStmtNode(e, new DeclListNode(vdl), new StmtListNode(sl));
                 :}
                 | IF LPAREN exp:e RPAREN LCURLY varDeclList:vdl1 stmtList:sl1 RCURLY ELSE LCURLY varDeclList:vdl2 stmtList:sl2 RCURLY
-                {: RESULT = new IfElseStmtNode(e, vdl1, sl1, vdl2, sl2);
+                {: RESULT = new IfElseStmtNode(e, new DeclListNode(vdl1), new StmtListNode(sl1), new DeclListNode(vdl2), new StmtListNode(sl2));
                 :}
                 | WHILE LPAREN exp:e RPAREN LCURLY varDeclList:vdl stmtList:sl RCURLY
-                {: RESULT = new WhileStmtNode(e, vdl, sl);
+                {: RESULT = new WhileStmtNode(e, new DeclListNode(vdl), new StmtListNode(sl));
                 :}
                 | RETURN exp:e SEMICOLON
                 {: RESULT = new ReturnStmtNode(e);
                 :}
                 | RETURN SEMICOLON
-                {: RESULT = new ReturnStmtNode(NULL);
+                {: RESULT = new ReturnStmtNode(null);
                 :}
                 | fncall:f SEMICOLON
                 {: RESULT = new CallStmtNode(f);
+                :}
+                ;
 
 assignExp       ::= loc:l ASSIGN exp:r
                 {: RESULT = new AssignNode(l,r);
