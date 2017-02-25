@@ -93,6 +93,8 @@ non terminal AssignNode assignExp;
 non terminal ExpNode term;
 non terminal CallExpNode fncall;
 non terminal LinkedList<ExpNode> actualList;
+non terminal FnDeclNode fnDecl;
+non terminal FnBodyNode fnBody;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -132,6 +134,9 @@ decl            ::= varDecl:v
                 | structDecl:s
                 {: RESULT = s;
                 :}
+                | fnDecl:f
+                {: RESULT = f;
+                :}
                 ;
 
 varDeclList	::= varDeclList:vdl varDecl:vd
@@ -167,6 +172,11 @@ structBody      ::= structBody:body varDecl:decl
                 :}
                 ;
                 
+fnDecl          ::= type:t id:i formals:f fnBody:b
+                {: RESULT = new FnDecl(t, i, f, b);
+                :}
+                ;
+                
 formals         ::= LPAREN RPAREN
                 {: RESULT = new FormalsListNode(new LinkedList<>());
                 :}
@@ -188,6 +198,11 @@ formalsList     ::= formalDecl:fd
 
 formalDecl      ::= type:t id:i        // note: no struct parameters
                 {: RESULT = new FormalDeclNode(t,i);
+                :}
+                ;
+                
+fnBody          ::= LCURLY varDeclList:v stmtList:s RCURLY
+                {: RESULT = new FnBodyNode(v, s);
                 :}
                 ;
 
