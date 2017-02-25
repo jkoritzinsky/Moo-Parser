@@ -93,6 +93,7 @@ non terminal AssignNode assignExp;
 non terminal ExpNode term;
 non terminal CallExpNode fncall;
 non terminal LinkedList<ExpNode> actualList;
+non terminal LinkedList<StmtNode> stmtList;
  
  
 /* NOTE: Add precedence and associativity declarations here */
@@ -191,6 +192,15 @@ formalDecl      ::= type:t id:i        // note: no struct parameters
                 :}
                 ;
 
+stmtList        ::= stmtList:sl stmt:s
+                {: sl.addLast(s);
+                   RESULT = sl;
+                :}
+                | /* epsilon */
+                {: RESULT = new LinkedList<StmtNode>();
+                :}
+                ;
+
 stmt            ::= assignExp:a SEMICOLON
                 {: RESULT = new AssignStmtNode(a);
                 :}
@@ -223,6 +233,7 @@ stmt            ::= assignExp:a SEMICOLON
                 :}
                 | fncall:f SEMICOLON
                 {: RESULT = new CallStmtNode(f);
+                ;
 
 assignExp       ::= loc:l ASSIGN exp:r
                 {: RESULT = new AssignNode(l,r);
