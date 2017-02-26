@@ -452,6 +452,7 @@ class IfStmtNode extends StmtNode {
         p.println(") {");
         myDeclList.unparse(p, indent+4);
         myStmtList.unparse(p, indent+4);
+        doIndent(p, indent);
         p.print("}");
     }
 
@@ -478,10 +479,13 @@ class IfElseStmtNode extends StmtNode {
         p.println(") {");
         myThenDeclList.unparse(p, indent+4);
         myThenStmtList.unparse(p, indent+4);
+        doIndent(p, indent);
         p.println("}");
-        p.print("else {");
+        doIndent(p, indent);
+        p.println("else {");
         myElseDeclList.unparse(p, indent+4);
         myElseStmtList.unparse(p, indent+4);
+        doIndent(p, indent);
         p.print("}");
     }
 
@@ -506,6 +510,7 @@ class WhileStmtNode extends StmtNode {
         p.println(") {");
         myDeclList.unparse(p, indent+4);
         myStmtList.unparse(p, indent+4);
+        doIndent(p, indent);
         p.print("}");
     }
 
