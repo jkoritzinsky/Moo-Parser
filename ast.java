@@ -156,8 +156,13 @@ class FormalsListNode extends ASTnode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        for(FormalDeclNode node : myFormals) {
-            node.unparse(p, indent);
+        Iterator<FormalDeclNode> it = myFormals.iterator();
+        if(it.hasNext()) {
+            it.next().unparse(p, indent);
+        }
+        while(it.hasNext()) {
+            p.print(", ");
+            it.next().unparse(p, indent);
         }
     }
 
@@ -642,7 +647,7 @@ class DotAccessExpNode extends ExpNode {
     }
 
     public void unparse(PrintWriter p, int indent) {
-        myId.unparse(p, indent);
+        myLoc.unparse(p, indent);
         p.print('.');
         myId.unparse(p, indent);
     }
